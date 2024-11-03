@@ -50,7 +50,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
-import net.developermaster.vtcgestion.ui.ActivityAdicionar
 import net.developermaster.vtcgestion.ui.theme.VtcGestionTheme
 
 class MainActivity : ComponentActivity() {
@@ -58,10 +57,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            //todo tela cheia
             //todo tema do app
             VtcGestionTheme {
 
+                //todo esqueleto do app
                 Scaffold()
 
             }//todo fim do tema
