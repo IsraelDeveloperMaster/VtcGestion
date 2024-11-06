@@ -17,7 +17,7 @@
         android:theme="@style/Theme.VtcGestion"
         tools:targetApi="31">
         <activity
-            android:name=".ActivityAdicionar"
+            android:name=".view.ActivityAdicionar"
             android:exported="false"
             android:label="@string/title_activity_adicionar"
             android:theme="@style/Theme.VtcGestion" />
@@ -27,7 +27,7 @@
             android:value="AIzaSyDOj0lwnJo2fr-QnOv-W2hfZb_7fsqC4j8" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.VtcGestion">

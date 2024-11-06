@@ -1,4 +1,4 @@
-package net.developermaster.vtcgestion
+package net.developermaster.vtcgestion.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -48,9 +48,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.Fragment
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
-import net.developermaster.vtcgestion.ui.theme.VtcGestionTheme
+import net.developermaster.kotlincanivetesuico.utils.utilsGeral.mensagemToast
+import net.developermaster.vtcgestion.R
+import net.developermaster.vtcgestion.view.ui.theme.VtcGestionTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -381,11 +384,6 @@ class MainActivity : ComponentActivity() {
             })
     }
 
-    @Composable
-    fun Fab2() {
-
-    }
-
     @Preview(showBackground = true)
 
     @Composable
@@ -393,10 +391,6 @@ class MainActivity : ComponentActivity() {
         VtcGestionTheme {
             Home(Modifier.fillMaxSize())
         }
-    }
-
-    fun mensagemToast(messagem: String) {
-        Toast.makeText(this, messagem, Toast.LENGTH_SHORT).show()
     }
 }
 
