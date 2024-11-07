@@ -1,4 +1,4 @@
-package net.developermaster.vtcgestion.ui.theme
+package net.developermaster.vtcgestion.view.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

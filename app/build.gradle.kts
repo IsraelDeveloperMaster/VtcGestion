@@ -1,6 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+
+    // Add the Google services Gradle plugin
+    //todo fireBase
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -69,4 +74,14 @@ dependencies {
 
     //todo Google Maps
     implementation(libs.maps.compose)
+
+    //todo fireBase
+    implementation(libs.firebase.firestore.ktx)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+//    implementation(libs.firebase.database.ktx)
+
+
+
+
 }

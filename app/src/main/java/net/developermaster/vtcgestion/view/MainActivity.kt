@@ -1,4 +1,4 @@
-package net.developermaster.vtcgestion
+package net.developermaster.vtcgestion.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -48,11 +50,18 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.FirebaseApp
+
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
-import net.developermaster.vtcgestion.ui.theme.VtcGestionTheme
+import net.developermaster.kotlincanivetesuico.utils.utilsGeral.mensagemToast
+import net.developermaster.vtcgestion.R
+import net.developermaster.vtcgestion.model.Model
+import net.developermaster.vtcgestion.view.ui.theme.VtcGestionTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -202,14 +211,58 @@ class MainActivity : ComponentActivity() {
                 //todo lista
                 item {
 
-                    CaixaDeTextoTextFild()
+                    Salvar()
+//                    SalvarNoFirestore()
 
-                    Espaco()
-
-                    CaixaDeTextoOutLineTextField()
-                    CaixaDeTextoOutLineTextField()
                 }
             }//LazyColumn Caixa de texto
+        }
+    }
+
+    @Composable
+    fun Salvar() {
+
+        var ganacia
+        by remember { mutableStateOf("") }
+
+        val model = Model(ganacia = ganacia)
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            OutlinedTextField(value = ganacia,
+                onValueChange = { ganacia = it },
+                label = { Text("Enter some text") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+
+                onClick = {
+
+                    val data = hashMapOf(
+                        "text" to ganacia
+                    )
+
+                    FirebaseFirestore.getInstance().collection("VtcGestion").document().set(model)
+                        .addOnSuccessListener { sucesso ->
+                            mensagemToast("Salvo com sucesso")
+                        }.addOnFailureListener { erro ->
+                            mensagemToast("Salvo com sucesso ${erro.message}")//
+                        }
+                },
+
+                modifier = Modifier.fillMaxWidth()
+
+            ) {
+
+                Text("Save to Firestore")
+            }
         }
     }
 
@@ -381,11 +434,6 @@ class MainActivity : ComponentActivity() {
             })
     }
 
-    @Composable
-    fun Fab2() {
-
-    }
-
     @Preview(showBackground = true)
 
     @Composable
@@ -393,10 +441,6 @@ class MainActivity : ComponentActivity() {
         VtcGestionTheme {
             Home(Modifier.fillMaxSize())
         }
-    }
-
-    fun mensagemToast(messagem: String) {
-        Toast.makeText(this, messagem, Toast.LENGTH_SHORT).show()
     }
 }
 

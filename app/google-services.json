@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "685626347688",
+    "project_id": "vtc-db-6c0fe",
+    "storage_bucket": "vtc-db-6c0fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685626347688:android:840caa0e79fcc40e87f29d",
+        "android_client_info": {
+          "package_name": "net.developermaster.vtcgestion"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArjmUzgR_WrWx3ml_TwnVViW_yCEOZL-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
