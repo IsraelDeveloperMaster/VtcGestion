@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +21,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,17 +30,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.firebase.firestore.FirebaseFirestore
 import net.developermaster.vtcgestion.view.ui.ui.theme.VtcGestionTheme
 
 class ActivityAdicionar : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+//    lateinit var firestore: FirebaseFirestore
+
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             VtcGestionTheme {
 
-                Home(Modifier.fillMaxSize()
-                    /*.background(Color.Blue)*/)//todo chamando a funcao Home com o padding interno
+                Home(
+                    Modifier.fillMaxSize()
+                    /*.background(Color.Blue)*/
+                )//todo chamando a funcao Home com o padding interno
             }
         }
     }
@@ -60,7 +66,9 @@ class ActivityAdicionar : ComponentActivity() {
 
                 TextoCabecalhoActivityAdicionar()
 
-                Data()
+                Salvar()
+
+                /*Data()
 
                 Espaco()
 
@@ -82,68 +90,25 @@ class ActivityAdicionar : ComponentActivity() {
 
                 Propina()
 
-                ButtonOkActivityAdicionar()
+                ButtonOkActivityAdicionar()*/
 
             }//Column Caixa de texto
         }
     }
 
-
-
     @Composable
     fun TextoCabecalhoActivityAdicionar() {
 
-        Text(modifier = Modifier.padding(start = 100.dp),
+        Text(
+            modifier = Modifier.padding(start = 100.dp),
 
             text = "Adicione sus Actividads",//todo texto
             color = Color.Black,//todo cor preta
         )
     }
-     @Composable
-    fun Data() {
-
-         var texto by remember { mutableStateOf("") }
-
-         OutlinedTextField( //todo caixa de texto com borda
-
-             modifier = Modifier
-                 .background(Color.White)
-                 .fillMaxWidth()
-                 .padding(all = 8.dp),
-
-             value = texto,//todo valor do texto
-
-             onValueChange = { textoDigitado ->
-
-                 texto = textoDigitado//todo valor do texto digitado na variavel texto
-
-                 mensagemToast(texto)
-             },
-
-             label = {
-
-                 Text(text = "Fecha") //todo texto do label
-             },
-
-             leadingIcon = {
-                 Icon(
-                     imageVector = Icons.Default.ThumbUp,//todo icone
-                     contentDescription = null, modifier = Modifier.width(50.dp),//todo largura
-                     tint = Color.Blue//todo cor azul da borda
-                 )
-             },
-
-             trailingIcon = {
-                 Icon(
-                     imageVector = Icons.Default.Favorite,//todo icone
-                     contentDescription = null, modifier = Modifier.width(50.dp),//todo largura
-                     tint = Color.Blue//todo cor azul da borda
-                 )
-             })
-     }
 
     @Composable
-    private fun Ganancia() {
+    fun Data() {
 
         var texto by remember { mutableStateOf("") }
 
@@ -161,6 +126,49 @@ class ActivityAdicionar : ComponentActivity() {
                 texto = textoDigitado//todo valor do texto digitado na variavel texto
 
                 mensagemToast(texto)
+            },
+
+            label = {
+
+                Text(text = "Fecha") //todo texto do label
+            },
+
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.ThumbUp,//todo icone
+                    contentDescription = null, modifier = Modifier.width(50.dp),//todo largura
+                    tint = Color.Blue//todo cor azul da borda
+                )
+            },
+
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Favorite,//todo icone
+                    contentDescription = null, modifier = Modifier.width(50.dp),//todo largura
+                    tint = Color.Blue//todo cor azul da borda
+                )
+            })
+    }
+
+    @Composable
+    private fun Ganancia() {
+
+        var textoGanancia by remember { mutableStateOf("") }
+
+        OutlinedTextField( //todo caixa de texto com borda
+
+            modifier = Modifier
+                .background(Color.White)
+                .fillMaxWidth()
+                .padding(all = 8.dp),
+
+            value =textoGanancia ,//todo valor do texto
+
+            onValueChange = { textoDigitado ->
+
+                textoGanancia = textoDigitado//todo valor do texto digitado na variavel texto
+
+                mensagemToast(textoGanancia)
             },
 
             label = {
@@ -385,6 +393,55 @@ class ActivityAdicionar : ComponentActivity() {
     fun Espaco() {
         Spacer(modifier = Modifier.height(16.dp))
     }
+
+    @Composable
+    fun Salvar() {
+
+//        firestore = FirebaseFirestore.getInstance()
+
+        var text by remember { mutableStateOf("") }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+                OutlinedTextField(
+                    value = text,
+                    onValueChange = { text = it },
+                    label = { Text("Enter some text") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Button(
+
+                    onClick = {
+
+                        val data = hashMapOf(
+                            "text" to text
+                        )
+                        /*firestore.collection("texts").add(data)
+                            .addOnSuccessListener { documentReference ->
+                                println("DocumentSnapshot added with ID: ${documentReference.id}")
+                            }
+                            .addOnFailureListener { e ->
+                                println("Error adding document: $e")
+                            }*/
+                    },
+
+                    modifier = Modifier.fillMaxWidth()
+
+                ) {
+
+                    Text("Save to Firestore")
+
+                }
+            }
+        }
+
 
     @Preview(showBackground = true)
 
